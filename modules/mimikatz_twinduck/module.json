@@ -1,0 +1,11 @@
+{
+  "title": "Mimikatz Local Storage",
+  "description": "Runs Mimikatz from Local Storage",
+  "requirements": {
+    "firmware": "twinduck",
+    "folders": ["exec", "data", "data/mimikatz"],
+    "files": ["exec/mimikatz.ps1"],
+    "has_uac_bypass": "true"
+  },
+  "attributes": {}
+}

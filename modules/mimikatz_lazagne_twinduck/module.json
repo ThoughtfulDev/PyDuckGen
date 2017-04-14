@@ -1,0 +1,11 @@
+{
+  "title": "Mimikatz & laZagne Local Storage",
+  "description": "Runs Mimikatz & laZagne from Local Storage",
+  "requirements": {
+    "firmware": "twinduck",
+    "folders": ["exec", "data", "data/mimikatz", "data/laZagne"],
+    "files": ["exec/mimikatz.ps1", "exec/laZagne.exe"],
+    "has_uac_bypass": "true"
+  },
+  "attributes": {}
+}

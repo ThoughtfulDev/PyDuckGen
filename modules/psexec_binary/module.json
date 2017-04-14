@@ -1,0 +1,11 @@
+{
+  "title": "PSExec Powershell Payload",
+  "description": "Runs a simple powershell payload and then startups as SYSTEM user next time the system boots\n\t     Replace payload in exec/PSExec_binary/payload.txt",
+  "requirements": {
+    "firmware": "twinduck",
+    "folders": ["exec", "exec/PSExec_binary"],
+    "files": ["exec/PSExec_binary/msvcp120d.dll","exec/PSExec_binary/msvcr120d.dll","exec/PSExec_binary/payload.txt","exec/PSExec_binary/PSExec.exe"],
+    "has_uac_bypass": "true"
+  },
+  "attributes": {}
+}

