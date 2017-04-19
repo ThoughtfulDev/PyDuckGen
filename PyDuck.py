@@ -17,8 +17,14 @@ def main():
     init(autoreset=True) # Colorama init
     output.cls()
     output.banner()
+    checkRequirements()
     loadModules()
     startShell()
+
+def checkRequirements():
+    if os.getuid() == 0:
+        output.warning("Do not run this app as root you may override System files...")
+        quit()
 
 def loadModules():
     output.info("Loading Modules..")
