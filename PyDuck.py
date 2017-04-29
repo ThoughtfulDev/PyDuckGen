@@ -6,7 +6,7 @@
 
 from colorama import init, Fore, Back, Style
 from tabulate import tabulate
-import json, os, output, subprocess, shutil, time
+import json, os, output, subprocess, shutil, time, sys
 
 modules = []
 loadedModule = []
@@ -17,14 +17,8 @@ def main():
     init(autoreset=True) # Colorama init
     output.cls()
     output.banner()
-    checkRequirements()
     loadModules()
     startShell()
-
-def checkRequirements():
-    if os.getuid() == 0:
-        output.warning("Do not run this app as root you may override System files...")
-        quit()
 
 def loadModules():
     output.info("Loading Modules..")
@@ -50,7 +44,7 @@ def handleCommand(cmd):
         cmdList()
     elif (cmd[:4] == "exit" or cmd[:4] == "quit") and len(cmd) == 4:
         output.success('KTHXBYE')
-        quit(0)
+        sys.exit()
     elif cmd[:4] == "help" and len(cmd) == 4:
         cmdHelp(False)
     elif cmd[:3] == "cls" and len(cmd) == 3:
@@ -268,7 +262,7 @@ def cmdUseGenerate(modulename):
 
     print('')
     output.success("Thanks 4 shopping with PyDuck")
-    quit(0)
+    sys.exit()
 
 #Main entry point
 if __name__ == "__main__":
