@@ -70,7 +70,7 @@ def cmdinfo(cmd):
         desc = ['Description', loadedModule['description']]
         firmware = ['Firmware', loadedModule['requirements']['firmware']]
         uacbypass = ['Bypass UAC', loadedModule['requirements']['has_uac_bypass']]
-        print(tabulate([name,desc,firmware, uacbypass], headers=['Attribute', 'Value']))
+        print(tabulate([name, desc, firmware, uacbypass], headers=['Attribute', 'Value']))
     else:
         output.error("Module '" + modulename + "' does not exist")
 
