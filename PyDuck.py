@@ -6,7 +6,8 @@
 
 from colorama import init, Fore, Back, Style
 from tabulate import tabulate
-import json, os, output, subprocess, shutil, time, sys
+import json, os, output, subprocess, shutil, time, sys, readline
+from AutoCompleter import AutoCompleter
 
 modules = []
 loadedModule = []
@@ -30,6 +31,23 @@ def loadModules():
 
 
 def startShell():
+    #build possible inputs:
+    possibleInputs = [
+        'modules',
+        'cls',
+        'clear',
+        'quit',
+        'exit',
+        'help'
+    ]
+    for m in modules:
+        possibleInputs.append(m)
+
+    completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL)
+    readline.set_completer_delims(' \t\n;')
+    readline.set_completer(completer.complete)
+    readline.parse_and_bind('tab: complete')
+    readline.set_completion_display_matches_hook(completer.display_matches)
     cmd = input("\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL)
     handleCommand(cmd)
 
@@ -40,7 +58,7 @@ def handleCommand(cmd):
     if cmd[:4] == "info":
         cmdinfo(cmd)
     #list modules
-    elif cmd[:12] == "show modules" and len(cmd) == 12:
+    elif cmd[:7] == "modules" and len(cmd) == 7:
         cmdList()
     elif (cmd[:4] == "exit" or cmd[:4] == "quit") and len(cmd) == 4:
         output.success('KTHXBYE')
@@ -51,21 +69,22 @@ def handleCommand(cmd):
         output.cls()
     elif cmd[:5] == "clear" and len(cmd) == 5:
         output.cls()
-    elif cmd[:3] == "use":
-        cmdUse(cmd)
     else:
-        output.error('Unknown Command => ' + cmd)
+        if cmd in modules:
+            cmdUse(cmd)
+        else:
+            output.error('Unknown Command => ' + cmd)
 
     startShell()
 
 def cmdinfo(cmd):
-    modulename = cmd[5:]
+    modulename = cmd
     module_content = ''
     if os.path.isfile('modules/' + modulename + '/module.json'):
         with open('modules/' + modulename + '/module.json', 'r') as module:
             module_content = module.read().replace('\n','')
         loadedModule = json.loads(module_content)
-        print('\n=> Module Info\n---------------------------------------------')
+        print('\n=> Module Info\n--------------------------------------')
         name = ['Name',loadedModule['title']]
         desc = ['Description', loadedModule['description']]
         firmware = ['Firmware', loadedModule['requirements']['firmware']]
@@ -76,7 +95,7 @@ def cmdinfo(cmd):
 
 def cmdList():
     global modules
-    print('\n > Loaded Modules\n---------------------------------------------')
+    print('\n > Loaded Modules\n--------------------------------------')
     for module in modules:
         output.success(module)
 
@@ -84,27 +103,26 @@ def cmdHelp(showPayLoadhelp):
     clscmd = ['cls/clear', 'Clears the screen']
 
     if not showPayLoadhelp:
-        print('\n=> Main Menu Command List\n------------------------------------------------------------------')
-        listcmd = ['show modules', 'Lists all available payloads in the modules folder']
-        usecmd = ['use <payload>', 'Loads the payload for further operation']
-        infocmd = ['info <payload>', 'Gives you information about the specified payload']
-
+        print('\n=> Main Menu Command List\n--------------------------------------')
+        listcmd = ['modules', 'Lists all available payloads in the modules folder']
+        usecmd = ['<payload>', 'Loads the payload for further operation']
         exitcmd = ['quit/exit', 'Exits the program']
-        print(tabulate([listcmd, usecmd, infocmd, clscmd, exitcmd], headers=['Command', 'output.info']))
+        print(tabulate([listcmd, usecmd, clscmd, exitcmd], headers=['Command', 'output.info']))
 
     else:
     #------------------------------------------------------------------------------------------------------------#
-        print('\n\n=> Payload specific Command List\n------------------------------------------------------------------------------------')
+        print('\n\n=> Payload specific Command List\n--------------------------------------')
         gencmd = ['generate/gen', 'Generates the inject.bin and copies it to your rubber ducky']
         setcmd = ['set <attribute> <value>', 'Sets the given attribute to the given value']
-        attributescmd = ['info', 'Returns a list of attributes to set']
+        attributescmd = ['attributes', 'Returns a list of attributes to set']
+        infocmd = ['info', 'Gives you information about the payload']
         exit2cmd = ['quit/exit', 'Returns to payload selection']
-        print(tabulate([gencmd, setcmd, attributescmd, clscmd, exit2cmd], headers=['Command', 'output.info']))
+        print(tabulate([infocmd, gencmd, setcmd, attributescmd, clscmd, exit2cmd], headers=['Command', 'output.info']))
 
 def cmdUse(cmd):
     global loadedModule
     global moduleAttributes
-    modulename = cmd[4:]
+    modulename = cmd
     module_content = ''
     if os.path.isfile('modules/' + modulename + '/module.json'):
         with open('modules/' + modulename + '/module.json', 'r') as module:
@@ -126,6 +144,22 @@ def cmdUse(cmd):
         output.error("Module '" + modulename + "' does not exist")
 
 def cmdUseShell(modulename):
+    possibleInputs = [
+        'info',
+        'generate',
+        'gen',
+        'attributes',
+        'exit',
+        'quit',
+        'set <attribute> <value>',
+        'help'
+    ]
+
+    completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL + "(" + Fore.LIGHTRED_EX + modulename + Style.RESET_ALL +"): ")
+    readline.set_completer_delims(' \t\n;')
+    readline.set_completer(completer.complete)
+    readline.parse_and_bind('tab: complete')
+    readline.set_completion_display_matches_hook(completer.display_matches)
     cmdPay = input("\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL + "(" + Fore.LIGHTRED_EX + modulename + Style.RESET_ALL +"): ")
     handleUseCmd(cmdPay, modulename)
 
@@ -137,6 +171,9 @@ def handleUseCmd(cmd, modulename):
         global moduleAttributes
         moduleAttributes = []
     elif cmd[:4] == "info" and len(cmd) == 4:
+        cmdinfo(modulename)
+        cmdUseShell(modulename)
+    elif cmd[:10] == "attributes" and len(cmd) == 10:
         cmdUseAttributes()
         cmdUseShell(modulename)
     elif (cmd[:3] =="gen" and len(cmd) == 3) or (cmd[:8] == "generate" and len(cmd) == 8):
