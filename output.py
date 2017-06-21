@@ -1,5 +1,5 @@
 # Just the print beauty
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 import os
 
 def success(msg):

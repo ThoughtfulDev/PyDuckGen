@@ -222,6 +222,9 @@ def cmdUseAttributes():
     print(tabulate(attributes, headers=['Attribute', 'Value']))
 
 
+
+
+
 def cmdUseGenerate(modulename):
     #read the duckyscript and replace the uac key if needed
     global moduleAttributes

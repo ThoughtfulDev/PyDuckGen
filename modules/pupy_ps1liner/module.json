@@ -1,0 +1,11 @@
+{
+  "title": "Pupy Windows Powershell 1Liner",
+  "description": "Runs powershell 'ps1liner' payload generated with Pupy. (https://github.com/n1nj4sec/pupy)",
+  "requirements": {
+    "firmware": "factory",
+    "has_uac_bypass": "false"
+  },
+  "attributes": {
+    "encpayload": "Your encoded payload string (generate with pupygen.py from Pupy Framework => choose ps1liner)"
+  }
+}
