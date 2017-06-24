@@ -1,6 +1,7 @@
 {
   "title": "Mimikatz Local Storage",
   "description": "Runs Mimikatz from Local Storage",
+  "author": "ThoughtfulDev",
   "requirements": {
     "firmware": "twinduck",
     "folders": ["exec", "data", "data/mimikatz"],

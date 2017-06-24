@@ -1,6 +1,7 @@
 {
   "title": "PSExec Powershell Payload (wout Binary - native batch)",
   "description": "Runs a simple powershell payload and then startups as SYSTEM user next time the system boots\n\t     Replace payload in exec/PSExec_powershell/psexec.bat",
+  "author": "ThoughtfulDev",
   "requirements": {
     "firmware": "twinduck",
     "folders": ["exec", "exec/PSExec_powershell"],

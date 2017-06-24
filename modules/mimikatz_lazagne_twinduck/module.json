@@ -1,6 +1,7 @@
 {
   "title": "Mimikatz & laZagne Local Storage",
   "description": "Runs Mimikatz & laZagne from Local Storage",
+  "author": "ThoughtfulDev",
   "requirements": {
     "firmware": "twinduck",
     "folders": ["exec", "data", "data/mimikatz", "data/laZagne"],

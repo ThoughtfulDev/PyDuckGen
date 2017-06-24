@@ -1,6 +1,7 @@
 {
   "title": "PSExec Powershell Payload",
   "description": "Runs a simple powershell payload and then startups as SYSTEM user next time the system boots\n\t     Replace payload in exec/PSExec_binary/payload.txt",
+  "author": "ThoughtfulDev",
   "requirements": {
     "firmware": "twinduck",
     "folders": ["exec", "exec/PSExec_binary"],

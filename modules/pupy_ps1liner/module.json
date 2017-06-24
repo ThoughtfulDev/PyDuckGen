@@ -1,6 +1,7 @@
 {
   "title": "Pupy Windows Powershell 1Liner (UAC BYPASS)",
   "description": "Runs powershell 'ps1liner' payload generated with Pupy. (https://github.com/n1nj4sec/pupy)",
+  "author": "ThoughtfulDev, Pupy Framework",
   "requirements": {
     "firmware": "factory",
     "has_uac_bypass": "true"

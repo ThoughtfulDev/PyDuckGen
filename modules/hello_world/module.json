@@ -1,6 +1,7 @@
 {
   "title": "Hello World",
   "description": "Prints text specified in attribute 'text' into notepad (default= 'Hello World')",
+  "author": "ThoughtfulDev",
   "requirements": {
     "firmware": "factory",
     "has_uac_bypass": "false"
