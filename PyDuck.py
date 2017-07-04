@@ -22,7 +22,7 @@ def main():
     startShell()
 
 def loadModules():
-    output.info("Loading Modules..")
+    output.info("Loading Modules...")
     global modules
     for name in os.listdir('modules'):
         if os.path.isdir(os.path.join('modules', name)) and os.path.isfile(os.path.join('modules', name) + '/module.json'):
@@ -301,7 +301,7 @@ def cmdUseGenerate(modulename):
     output.success("Copying inject.bin to Ducky...Done!")
 
     print('')
-    output.success("Thanks 4 shopping with PyDuck")
+    output.success("Thanks 4 shopping with PyDuckGen")
     sys.exit()
 
 #Main entry point
