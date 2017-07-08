@@ -6,8 +6,19 @@
 
 from colorama import init, Fore, Back, Style
 from tabulate import tabulate
-import json, os, output, subprocess, shutil, time, sys, readline
+import json, os, output, subprocess, shutil, time, sys
 from AutoCompleter import AutoCompleter
+
+autocomplete = True
+
+try:
+  import readline
+  if os.name == 'nt':
+      autocomplete = False
+except ImportError:
+  import pyreadline as readline
+  if os.name == 'nt':
+      autocomplete = False
 
 modules = []
 loadedModule = []
@@ -91,11 +102,12 @@ def startShell():
     for m in modules:
         possibleInputs.append(m)
 
-    completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL)
-    readline.set_completer_delims(' \t\n;')
-    readline.set_completer(completer.complete)
-    readline.parse_and_bind('tab: complete')
-    readline.set_completion_display_matches_hook(completer.display_matches)
+    if autocomplete is True:
+        completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL)
+        readline.set_completer_delims(' \t\n;')
+        readline.set_completer(completer.complete)
+        readline.parse_and_bind('tab: complete')
+        readline.set_completion_display_matches_hook(completer.display_matches)
     cmd = input("\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL)
     handleCommand(cmd)
 
@@ -203,11 +215,12 @@ def cmdUseShell(modulename):
         'help'
     ]
 
-    completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL + "(" + Fore.LIGHTRED_EX + modulename + Style.RESET_ALL +"): ")
-    readline.set_completer_delims(' \t\n;')
-    readline.set_completer(completer.complete)
-    readline.parse_and_bind('tab: complete')
-    readline.set_completion_display_matches_hook(completer.display_matches)
+    if autocomplete is True:
+        completer = AutoCompleter(list(set(possibleInputs)), "\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL + "(" + Fore.LIGHTRED_EX + modulename + Style.RESET_ALL +"): ")
+        readline.set_completer_delims(' \t\n;')
+        readline.set_completer(completer.complete)
+        readline.parse_and_bind('tab: complete')
+        readline.set_completion_display_matches_hook(completer.display_matches)
     cmdPay = input("\n" + Fore.LIGHTCYAN_EX + "pyd> " + Style.RESET_ALL + "(" + Fore.LIGHTRED_EX + modulename + Style.RESET_ALL +"): ")
     handleUseCmd(cmdPay, modulename)
 
