@@ -21,6 +21,54 @@ def main():
     loadModules()
     startShell()
 
+def main_quick():
+    "Fast payload generation using command line arguments"
+    init(autoreset=True)
+    output.cls()
+    output.banner()
+    loadModules()
+    #
+    #   format: ./PyDuck.py <module> <duck_drive> [list of attributes in format]
+    #   format of attributes: attribute=value
+    #
+    global loadedModule
+    global moduleAttributes
+    modulename = sys.argv[1]
+    if modulename in modules:
+        if os.path.isfile('modules/' + modulename + '/module.json'):
+            with open('modules/' + modulename + '/module.json', 'r') as module:
+                module_content = module.read().replace('\n', '')
+            loadedModule = json.loads(module_content)
+
+            moduleAttributes = loadedModule['attributes']
+            # add default attributes: lang,drive
+            moduleAttributes['language'] = 'us'
+            moduleAttributes['sdcard_mount'] = sys.argv[2]
+            attr_args = []
+            if len(sys.argv) > 3:
+                for i in range(3, len(sys.argv)):
+                    attr_args.append(sys.argv[i])
+            # check for uac bypass and add attribute
+            if loadedModule['requirements']['has_uac_bypass'].lower() == "true":
+                moduleAttributes['uac_bypass_key'] = 'y'
+
+
+            for a in attr_args:
+                sep = a.split('=')
+                if sep[0] in moduleAttributes:
+                    output.success("Setting " + sep[0] + " to " + sep[1])
+                    moduleAttributes[sep[0]] = sep[1]
+                else:
+                    output.error("Attribute " + sep[0] + " not found..exiting")
+                    sys.exit(1)
+
+            cmdUseGenerate(modulename)
+
+        else:
+            output.error("Module '" + modulename + "' does not exist")
+    else:
+        output.error("Module '" + modulename + "' does not exist")
+
 def loadModules():
     output.info("Loading Modules...")
     global modules
@@ -306,4 +354,9 @@ def cmdUseGenerate(modulename):
 
 #Main entry point
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 1:
+        main()
+    elif len(sys.argv) >= 3:
+        main_quick()
+    else:
+        print('usage: python PyDuck.py [ <module> <ducky_mount> [list of module attributes in format: attr=value] ]')
