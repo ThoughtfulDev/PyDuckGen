@@ -1,0 +1,10 @@
+{
+  "title": "Lock your Computer Message",
+  "description": "Prints Lock your Computer Message to notepad Prank",
+  "author": "SurfKahuna",
+  "requirements": {
+    "firmware": "factory",
+    "has_uac_bypass": "false"
+  },
+  "attributes": {}
+}
