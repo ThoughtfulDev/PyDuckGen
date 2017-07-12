@@ -27,6 +27,7 @@ moduleAttributes = []
 def main():
     "Initialize system, search for modules and encoder"
     init(autoreset=True) # Colorama init
+    javaCheck()
     output.cls()
     output.banner()
     loadModules()
@@ -35,6 +36,7 @@ def main():
 def main_quick():
     "Fast payload generation using command line arguments"
     init(autoreset=True)
+    javaCheck()
     output.cls()
     output.banner()
     loadModules()
@@ -79,6 +81,13 @@ def main_quick():
             output.error("Module '" + modulename + "' does not exist")
     else:
         output.error("Module '" + modulename + "' does not exist")
+
+def javaCheck():
+    ret = os.system("java -version")
+    if ret > 0:
+        output.error("Java not installed or Java not in PATH Variable")
+        sys.exit(1)
+
 
 def loadModules():
     output.info("Loading Modules...")
