@@ -299,6 +299,15 @@ def cmdUseGenerate(modulename):
     #read the duckyscript and replace the uac key if needed
     global moduleAttributes
     ducky = moduleAttributes['sdcard_mount']
+    suffix = "/"
+    if os.name == 'nt':
+        suffix = "\\"
+    if not ducky.endswith(suffix, len(ducky)-1, len(ducky)):
+        if os.name == 'nt':
+            ducky = ducky + "\\"
+        else:
+            ducky = ducky + "/"
+
     lang = moduleAttributes['language']
     moduleAttributes.pop('sdcard_mount', None)
     moduleAttributes.pop('language', None)
