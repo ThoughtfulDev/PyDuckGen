@@ -1,0 +1,14 @@
+{
+    "title": "Linux Reverse Netcat Shell",
+    "description": "Runs a reverse shell with netcat",
+    "author": "tuzzmaniandevil, Ported to Ducky By ThoughtfulDev",
+    "requirements": {
+      "firmware": "factory",
+      "has_uac_bypass": "false"
+    },
+    "attributes": {
+        "host": "localhost",
+        "port": "4444"
+    }
+  }
+  

