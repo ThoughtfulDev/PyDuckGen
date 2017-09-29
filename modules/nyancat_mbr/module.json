@@ -1,0 +1,12 @@
+{
+  "title": "Nyancat MBR Overwrite",
+  "description": "Overwrites your Bootloader with Nyancat",
+  "author": "brainsmoke(Bootloader), ThoughtfulDev",
+  "requirements": {
+    "firmware": "twinduck",
+    "folders": ["exec"],
+    "files": ["exec/boot.exe", "exec/boot.bin"],
+    "has_uac_bypass": "true"
+  },
+  "attributes": {}
+}
