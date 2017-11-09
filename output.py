@@ -23,3 +23,5 @@ def banner():
     print("  \x1B[3mby ThoughtfulDev | github.com/ThoughtfulDev\x1B[23m\n")
     print(" \x1B[3mGet your USB Rubber Ducky up and running faster\x1B[23m")
     print(Fore.WHITE + " \t\t  Version " + Fore.MAGENTA + "1.2.1\n")
+    print("")
+    print("Type `help` to get a list of all Commands")
