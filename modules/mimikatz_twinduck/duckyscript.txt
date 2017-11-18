@@ -3,7 +3,7 @@ REM and lazagne to get browser creds
 REM Author: Hak5Darren Props: Mubix, Clymb3r, Gentilkiwi
 REM Thanks to: https://www.hak5.org/blog/15-second-password-hack-mr-robot-style
 REM -------------------------------------------------------------------------------------
-DELAY 5000
+DELAY 7000
 REM get rid of autostart message from storage of ducky
 ALT F4
 DELAY 500

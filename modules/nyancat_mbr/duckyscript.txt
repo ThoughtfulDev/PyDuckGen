@@ -1,6 +1,6 @@
 REM I am NOT responsible for ANY DAMAGE
 REM overwrites bootloader with https://github.com/brainsmoke/nyanmbr
-DELAY 5000
+DELAY 7000
 ESCAPE
 DELAY 500
 CONTROL ESCAPE

